@@ -150,7 +150,6 @@ def build_download_response(query):
 def csv_report(query):
     try:
         res = query.execute()
-
         return write_csv(res.headers, res.data)
     except DatabaseError as e:
         return str(e)
@@ -159,7 +158,6 @@ def csv_report(query):
 def xlsx_report(query):
     try:
         res = query.execute()
-
         return write_xslx(res.headers, res.data)
     except DatabaseError as e:
         return str(e)
