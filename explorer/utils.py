@@ -109,7 +109,7 @@ def write_xslx(headers, data):
     row=1
     for x in range(len(data)):
         for y in range(len(data[x])):
-            ws.write(row,col,data[row-1][col])
+            ws.write(row,col,data[x][y])
             col+=1
         row+=1
     wb.close()
