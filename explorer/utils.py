@@ -99,19 +99,23 @@ def write_xslx(headers, data):
     wb = xlsxwriter.Workbook(fname)
     ws = wb.add_worksheet()
 
+    bold = wb.add_format({'bold': True})
+
+
     row=0
     col=0
     for header in headers:
-        ws.write(row,col,header.title)
+        ws.write(row,col,header.title, bold)
         col+=1
 
     col=0
     row=1
     for x in range(len(data)):
         for y in range(len(data[x])):
-            ws.write(row,col,data[x][y])
+            ws.write(row,col,data[row-1][col])
             col+=1
         row+=1
+        col=0
     wb.close()
 
     fd = open(fname, 'r')
@@ -137,10 +141,10 @@ def build_stream_response(query):
 
 
 def build_download_response(query):
-    data = xlsx_report(query) if app_settings.XLSX_INSTEAD_OF_CSV else csv_report(query)
+    data = csv_report(query)
     # TODO change filetype based on settings
     response = HttpResponse(data, content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="%s.csv"' % (
+    response['Content-Disposition'] = 'attachment; filename="%s.xlsx"' % (
         get_filename_for_title(query.title)
     )
     response['Content-Length'] = len(data)
@@ -150,18 +154,10 @@ def build_download_response(query):
 def csv_report(query):
     try:
         res = query.execute()
-        return write_csv(res.headers, res.data)
-    except DatabaseError as e:
-        return str(e)
 
-
-def xlsx_report(query):
-    try:
-        res = query.execute()
         return write_xslx(res.headers, res.data)
     except DatabaseError as e:
         return str(e)
-
 
 
 # Helpers
@@ -240,4 +236,3 @@ def user_can_see_query(request, kwargs):
 
 def fmt_sql(sql):
     return sqlparse.format(sql, reindent=True, keyword_case='upper')
- 
