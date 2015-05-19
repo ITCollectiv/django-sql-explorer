@@ -152,11 +152,11 @@ class QueryResult(object):
     def process_rows(self):
         unicodes = self._get_unicodes()
         transforms = self._get_transforms()
-        for r in self.data:
-            for u in unicodes:
-                r[u] = r[u].encode('utf-8') if r[u] is not None else r[u]
-            for ix, t in transforms:
-                r[ix] = t.format(str(r[ix]))
+        #for r in self.data:
+        #    for u in unicodes:
+        #        r[u] = r[u].encode('utf-8') if r[u] is not None else r[u]
+        #    for ix, t in transforms:
+        #        r[ix] = t.format(str(r[ix]))
 
     def execute_query(self):
         conn = get_connection()
