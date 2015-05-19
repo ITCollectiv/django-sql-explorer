@@ -100,7 +100,7 @@ def write_xslx(headers, data):
     ws = wb.add_worksheet()
 
     bold = wb.add_format({'bold': True})
-
+    dtime = wb.add_format({'num_format': 'dd/mm/yy hh:mm'})
 
     row=0
     col=0
@@ -112,7 +112,10 @@ def write_xslx(headers, data):
     row=1
     for x in range(len(data)):
         for y in range(len(data[x])):
-            ws.write(row,col,data[row-1][col])
+            if type(data[row-1][col]) == type(datetime.now()):
+                ws.write(row,col,data[row-1][col], dtime)
+            else:
+                ws.write(row,col,data[row-1][col])
             col+=1
         row+=1
         col=0
