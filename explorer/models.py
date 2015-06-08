@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class Query(models.Model):
     title = models.CharField(max_length=255)
     sql = models.TextField()
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField('country', null=True, blank=True)
     created_by_user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     last_run_date = models.DateTimeField(auto_now=True)

@@ -5,7 +5,7 @@ from explorer.actions import generate_report_action
 
 class QueryAdmin(admin.ModelAdmin):
     list_display = ('title', 'description',)
-    list_filter = ('title',)
+    list_filter = ('title', 'description',)
     
     actions = [generate_report_action()]
 
